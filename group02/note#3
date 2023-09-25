@@ -1,5 +1,3 @@
-# 객체지향프로그램 4주차 정리노트
-
 <202184032 안신영, 202184022 박찬윤>
 
 <박찬윤> → 실습자
@@ -9,6 +7,8 @@
 2 .  실습 2를 정확하게 만들지 못하였다. → 생성자를 클래스 안에 선언해야하는데 조건 설정이 헷갈렸다.
 
 3 . 헤더파일이랑 cpp파일을 나누는 곳에서 어려움을 겪었다.
+
+4 . 헤더파일을 cpp파일에서 불러오는 방법을 헷갈렸다.
 
 <안신영> → 작성자
 
@@ -73,7 +73,7 @@ if (rect3.isSquare()) cout << "rect3는 정사각형이다" << endl;
 }
 ```
 
-<실습3>→ 헤더파일
+<실습3> → 헤더파일
 
 ```cpp
 class Box {
@@ -88,7 +88,7 @@ void draw();
 };
 ```
 
-<실습4> -cpp파일
+<실습4> → cpp파일
 
 ```cpp
 #include<iostream>
@@ -114,6 +114,83 @@ cout << endl;
 b.setSize(7, 4);
 b.setFill11('^');
 b.draw();
+}
+```
+
+<실습5> → 헤더파일
+
+```cpp
+class Calculator { // 계산기 클래스
+public:
+void run();
+};
+```
+
+```cpp
+class Adder { // 덧셈 모듈 클래스
+int op1, op2;
+public:
+Adder(int a, int b);
+int process();
+};
+```
+
+<실습6> → cpp파일
+
+```cpp
+#include<iostream>
+#include"Adder.h"
+Adder::Adder(int a, int b) {
+op1 = a; op2 = b;
+}
+int Adder::process() {
+return op1 + op2;
+}
+```
+
+```cpp
+#include<iostream>
+#include"Adder.h"
+#include"Calculator.h"
+using namespace std;
+#ifndef Adder.h
+#define Adder.h
+```
+
+```cpp
+void Calculator::run() {
+cout << "두 개의 수를 입력하세요>>";
+int a, b;
+cin >> a >> b; // 정수 두 개 입력#include<iostream>
+#include"Adder.h"
+#include"Calculator.h"
+using namespace std;
+#ifndef Adder.h
+
+void Calculator::run() {
+   cout << "두 개의 수를 입력하세요>>";
+   int a, b;
+   cin >> a >> b; // 정수 두 개 입력
+   Adder adder(a, b); // 덧셈기 생성
+   cout << adder.process(); // 덧셈 계산
+}
+Adder adder(a, b); // 덧셈기 생성
+cout << adder.process(); // 덧셈 계산
+}
+
+```
+
+```cpp
+#include<iostream>
+#include"Adder.h"
+#include"Calculator.h"
+using namespace std;
+```
+
+```cpp
+int main() {
+Calculator calc; // calc 객체 생성
+calc.run(); // 계산기 시작
 }
 ```
 
