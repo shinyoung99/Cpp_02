@@ -1,0 +1,97 @@
+# 객체지향 과제1
+
+박찬윤, 안신영
+
+```cpp
+#ifndef RAM_H
+#define RAM_H
+```
+
+```cpp
+class Ram {
+char mem[100 * 1024];
+int size;
+public:
+Ram();
+~Ram();
+char read(int address);
+void write(int address, char value);
+};
+```
+
+```cpp
+#endif // RAM_H
+```
+
+```cpp
+#include "Ram.h"
+#include<iostream>
+using namespace std;
+```
+
+```cpp
+Ram::Ram() {
+size = 100 * 1024;
+}
+```
+
+```cpp
+Ram::~Ram() {
+cout << "메모리 제거됨" << endl;
+}
+```
+
+```cpp
+char Ram::read(int address) {
+if (address < 0 || address >= size) {
+cerr << "에러: 주소가 범위를 벗어났습니다." << endl;
+return 0;
+}
+return mem[address];
+}
+```
+
+```cpp
+void Ram::write(int address, char value) {
+if (address < 0 || address >= size) {
+cerr << "에러: 주소가 범위를 벗어났습니다." << endl;
+return;
+}
+mem[address] = value;
+}
+```
+
+```cpp
+#include "Ram.h"
+#include<iostream>
+using namespace std;
+```
+
+```cpp
+int main() {
+Ram ram;
+ram.write(100, 20);
+ram.write(101, 30);
+char res = ram.read(100) + ram.read(101);
+ram.write(102, res);
+cout << "102 번지의 값 = " << (int)ram.read(102) << endl;
+```
+
+```
+return 0;
+
+```
+
+```cpp
+}
+```
+
+과제를 하면서 느낀점 
+
+<박찬윤>
+
+자바를 같이 배우면서 하는거다보니 c++이 많이 헷갈린다. 
+
+<안신영>
+
+손을 다쳐서 타자를 많이 못 쳐서 아쉽게 과제를 잘 하지 못했지만 팀플이라는 자료공유를 하면서 이러한 결과물을 도출 할 수 있음에 너무 좋았다.
