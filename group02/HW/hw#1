@@ -2,6 +2,7 @@
 
 박찬윤, 안신영
 
+1. //Ram.h
 ```cpp
 #ifndef RAM_H
 #define RAM_H
@@ -23,6 +24,7 @@ void write(int address, char value);
 #endif // RAM_H
 ```
 
+2.// Ram.cpp
 ```cpp
 #include "Ram.h"
 #include<iostream>
