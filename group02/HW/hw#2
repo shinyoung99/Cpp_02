@@ -1,0 +1,273 @@
+박찬윤, 안신영
+
+<main.cpp>
+#include<iostream>
+#include "GraphicEditor.h"
+#include"Shape.h"
+#include "Line.h"
+#include "Rect.h"
+#include "Circle.h"
+#include "UI.h"
+using namespace std;
+int main() {
+    GraphicEditor graphicEditor;
+    int choice;
+
+    do {
+        choice = UI::getMenuInput();
+
+        switch (choice) {
+        case 1: {
+            int insertType = UI::getInsertType();
+            Shape* newShape = nullptr;
+
+            switch (insertType) {
+            case 1:
+                newShape = new Line();
+                break;
+            case 2:
+                newShape = new Circle();
+                break;
+            case 3:
+                newShape = new Rect();
+                break;
+            default:
+                cout << "�߸��� �Է�\n";
+                break;
+            }
+
+            if (newShape != nullptr) {
+                graphicEditor.insertShape(newShape);
+            }
+
+            break;
+        }
+        case 2: {
+            int deleteIndex = UI::getDeleteIndex();
+            graphicEditor.deleteShape(deleteIndex);
+            break;
+        }
+        case 3:
+            graphicEditor.showAllShapes();
+            break;
+        case 4:
+            cout << "���α׷��� �����մϴ�.\n";
+            break;
+        default:
+            cout << "�߸��� �Է�\n";
+            break;
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
+
+
+<Circle.cpp>
+#include <iostream>
+#include "Shape.h"
+#include "Circle.h"
+using namespace std;
+void Circle::draw() {
+	cout << "Circle" << endl;
+}
+
+
+<Circle.h>
+class Circle : public Shape {
+protected:
+	virtual void draw();
+};
+
+
+
+<GraphicEditor.cpp>
+#include "GraphicEditor.h"
+#include <iostream>
+
+GraphicEditor::GraphicEditor() : pStart(nullptr), pLast(nullptr) {}
+
+GraphicEditor::~GraphicEditor() {
+    Shape* current = pStart;
+    Shape* next = nullptr;
+
+    while (current != nullptr) {
+        next = current->getNext();
+        delete current;
+        current = next;
+    }
+}
+
+void GraphicEditor::insertShape(Shape* shape) {
+    if (pStart == nullptr) {
+        pStart = shape;
+        pLast = shape;
+    }
+    else {
+        pLast->add(shape);
+        pLast = shape;
+    }
+}
+
+void GraphicEditor::deleteShape(int index) {
+    Shape* current = pStart;
+    Shape* previous = nullptr;
+
+    for (int i = 0; i < index && current != nullptr; ++i) {
+        previous = current;
+        current = current->getNext();
+    }
+
+    if (current != nullptr) {
+        if (previous == nullptr) {
+            pStart = current->getNext();
+        }
+        else {
+            previous->add(current->getNext());
+        }
+
+        delete current;
+    }
+}
+
+void GraphicEditor::showAllShapes() const {
+    Shape* current = pStart;
+    int index = 0;
+
+    while (current != nullptr) {
+        std::cout << index++ << ": ";
+        current->paint();
+        current = current->getNext();
+    }
+}
+
+
+<GraphicEditor.h>
+#ifndef GRAPHICEDITOR_H
+#define GRAPHICEDITOR_H
+
+#include "Shape.h"
+
+class GraphicEditor {
+private:
+    Shape* pStart;
+    Shape* pLast;
+
+public:
+    GraphicEditor();
+    ~GraphicEditor();
+    void insertShape(Shape* shape);
+    void deleteShape(int index);
+    void showAllShapes() const;
+};
+
+#endif // GRAPHICEDITOR_H
+ 
+
+<Line.cpp>
+#include <iostream>
+#include "Shape.h"
+#include "Line.h"
+using namespace std;
+void Line::draw() {
+	cout << "Line" << endl;
+}
+
+
+<Line.h>
+class Line : public Shape {
+protected:
+	virtual void draw();
+};
+
+
+<Rect.cpp>
+#include <iostream>
+#include "Shape.h"
+#include "Rect.h"
+using namespace std;
+void Rect::draw() {
+	cout << "Rectangle" << endl;
+}
+
+
+<Rect.h>
+class Rect : public Shape {
+protected:
+	virtual void draw();
+};
+
+
+<Shape.cpp>
+#include <iostream>
+#include "Shape.h"
+using namespace std;
+void Shape::paint() {
+	draw();
+}
+Shape* Shape::add(Shape* p) {
+	this->next = p;
+	return p;
+}
+
+#include <cstddef>
+#ifndef SHAPE_H
+#define SHAPE_H
+
+
+<Shape.h>
+class Shape {
+	Shape* next;
+protected:
+	virtual void draw()=0;
+public:
+	Shape() { next = NULL; }
+	virtual ~Shape() { }
+	void paint();
+	Shape* add(Shape* p);
+	Shape* getNext() { return next; }
+}; 
+#endif
+
+<Ui.cpp>
+#include "UI.h"
+#include <iostream>
+using namespace std;
+
+int UI::getMenuInput() {
+    int choice;
+    cout << "����:1, ����:2, ��κ���:3, ����:4 >> ";
+    cin >> choice;
+    return choice;
+}
+
+int UI::getInsertType() {
+    int type;
+    cout << "��:1, ��:2, �簢��:3 >> ";
+    cin >> type;
+    return type;
+}
+
+int UI::getDeleteIndex() {
+    int index;
+    cout << "�����ϰ��� �ϴ� ������ �ε���: ";
+    cin >> index;
+    return index;
+}
+
+<Ui.h>
+#ifndef UI_H
+#define UI_H
+
+class UI {
+public:
+    static int getMenuInput();
+    static int getInsertType();
+    static int getDeleteIndex();
+};
+
+#endif // UI_H
+
+
+
