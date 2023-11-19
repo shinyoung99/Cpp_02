@@ -1,6 +1,5 @@
 박찬윤, 안신영
 
-<main.cpp>
 #include<iostream>
 #include "GraphicEditor.h"
 #include"Shape.h"
@@ -32,7 +31,7 @@ int main() {
                 newShape = new Rect();
                 break;
             default:
-                cout << "�߸��� �Է�\n";
+                cout << "잘못된 입력\n";
                 break;
             }
 
@@ -51,10 +50,10 @@ int main() {
             graphicEditor.showAllShapes();
             break;
         case 4:
-            cout << "���α׷��� �����մϴ�.\n";
+            cout << "프로그램을 종료합니다.\n";
             break;
         default:
-            cout << "�߸��� �Է�\n";
+            cout << "잘못된 입력\n";
             break;
         }
 
@@ -62,7 +61,6 @@ int main() {
 
     return 0;
 }
-
 
 <Circle.cpp>
 #include <iostream>
@@ -237,21 +235,21 @@ using namespace std;
 
 int UI::getMenuInput() {
     int choice;
-    cout << "����:1, ����:2, ��κ���:3, ����:4 >> ";
+    cout << "삽입:1, 삭제:2, 모두보기:3, 종료:4 >> ";
     cin >> choice;
     return choice;
 }
 
 int UI::getInsertType() {
     int type;
-    cout << "��:1, ��:2, �簢��:3 >> ";
+    cout << "선:1, 원:2, 사각형:3 >> ";
     cin >> type;
     return type;
 }
 
 int UI::getDeleteIndex() {
     int index;
-    cout << "�����ϰ��� �ϴ� ������ �ε���: ";
+    cout << "삭제하고자 하는 도형의 인덱스: ";
     cin >> index;
     return index;
 }
