@@ -66,7 +66,7 @@ int main() {
     return 0;
 }
 
-// UI.cpp 파일
+<UI.cpp>
 #include "UI.h"
 
 int UI::getMenuInput() {
@@ -90,7 +90,7 @@ int UI::getDeleteIndex() {
     return index;
 }
 
-// GraphicEditor.cpp 파일
+<GraphicEditor.cpp>
 #include "GraphicEditor.h"
 #include<iostream>
 using namespace std;
@@ -126,7 +126,7 @@ void GraphicEditor::showAllShapes() const {
     }
 }
 
-// Rect.cpp 
+<Rect.cpp> 
 #include "Rect.h"
 #include <iostream>
 
@@ -134,7 +134,7 @@ void Rect::draw() const {
     std::cout << "Rectangle";
 }
 
-// Circle.cpp 
+<Circle.cpp> 
 #include "Circle.h"
 #include <iostream>
 
@@ -142,7 +142,7 @@ void Circle::draw() const {
     std::cout << "Circle";
 }
 
-// Rect.h 
+<Rect.h> 
 #ifndef RECT_H
 #define RECT_H
 
@@ -153,9 +153,9 @@ public:
     void draw() const override;
 };
 
-#endif // RECT_H
+#endif
 
-// UI.h 
+<UI.h> 
 #ifndef UI_H
 #define UI_H
 
@@ -168,9 +168,9 @@ public:
     static int getDeleteIndex();
 };
 
-#endif // UI_H
+#endif 
 
-// GraphicEditor.h 
+<GraphicEditor.h> 
 #ifndef GRAPHICEDITOR_H
 #define GRAPHICEDITOR_H
 
@@ -189,7 +189,7 @@ public:
     void showAllShapes() const;
 };
 
-#endif // GRAPHICEDITOR_H
+#endif 
 
 
 <Shape.h>
@@ -202,7 +202,7 @@ public:
     virtual ~Shape() {}
 };
 
-#endif // SHAPE_H
+#endif 
 
 
 
