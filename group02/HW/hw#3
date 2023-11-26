@@ -1,0 +1,209 @@
+박찬윤, 안신영 과제 제출
+
+<main.cpp>
+#include <iostream>
+#include <vector>
+#include "GraphicEditor.h"
+#include "UI.h"
+#include "Line.h"
+#include "Rect.h"
+#include "Circle.h"
+
+using namespace std;
+
+int main() {
+    GraphicEditor graphicEditor;
+    int choice;
+
+    do {
+        choice = UI::getMenuInput();
+
+        switch (choice) {
+        case 1: {
+            int insertType = UI::getInsertType();
+            Shape* newShape = nullptr;
+
+            switch (insertType) {
+            case 1:
+                newShape = new Line();
+                break;
+            case 2:
+                newShape = new Circle();
+                break;
+            case 3:
+                newShape = new Rect();
+                break;
+            default:
+                cout << "잘못된 입력\n";
+                break;
+            }
+
+            if (newShape != nullptr) {
+                graphicEditor.insertShape(newShape);
+            }
+
+            break;
+        }
+        case 2: {
+            int deleteIndex;
+            deleteIndex = UI::getDeleteIndex();
+            graphicEditor.deleteShape(deleteIndex);
+            break;
+        }
+        case 3:
+            graphicEditor.showAllShapes();
+            break;
+        case 4:
+            cout << "프로그램을 종료합니다.\n";
+            break;
+        default:
+            cout << "잘못된 입력\n";
+            break;
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
+
+// UI.cpp 파일
+#include "UI.h"
+
+int UI::getMenuInput() {
+    int choice;
+    std::cout << "삽입:1, 삭제:2, 모두보기:3, 종료:4 >> ";
+    std::cin >> choice;
+    return choice;
+}
+
+int UI::getInsertType() {
+    int type;
+    std::cout << "선:1, 원:2, 사각형:3 >> ";
+    std::cin >> type;
+    return type;
+}
+
+int UI::getDeleteIndex() {
+    int index;
+    std::cout << "삭제하고자 하는 도형의 인덱스: ";
+    std::cin >> index;
+    return index;
+}
+
+// GraphicEditor.cpp 파일
+#include "GraphicEditor.h"
+#include<iostream>
+using namespace std;
+GraphicEditor::GraphicEditor() {}
+
+GraphicEditor::~GraphicEditor() {
+    for (Shape* shape : v) {
+        delete shape;
+    }
+}
+
+void GraphicEditor::insertShape(Shape* shape) {
+    v.push_back(shape);
+}
+
+void GraphicEditor::deleteShape(int index) {
+    if (index >= 0 && index < v.size()) {
+        delete v[index];
+        v.erase(v.begin() + index);
+    }
+    else {
+        std::cout << "잘못된 인덱스\n";
+    }
+}
+
+// GraphicEditor.cpp 파일의 showAllShapes 함수 수정
+
+void GraphicEditor::showAllShapes() const {
+    for (size_t i = 0; i < v.size(); ++i) {
+        cout << i << ": ";
+        v[i]->draw();
+        cout << endl;
+    }
+}
+
+// Rect.cpp 
+#include "Rect.h"
+#include <iostream>
+
+void Rect::draw() const {
+    std::cout << "Rectangle";
+}
+
+// Circle.cpp 
+#include "Circle.h"
+#include <iostream>
+
+void Circle::draw() const {
+    std::cout << "Circle";
+}
+
+// Rect.h 
+#ifndef RECT_H
+#define RECT_H
+
+#include "Shape.h"
+
+class Rect : public Shape {
+public:
+    void draw() const override;
+};
+
+#endif // RECT_H
+
+// UI.h 
+#ifndef UI_H
+#define UI_H
+
+#include <iostream>
+
+class UI {
+public:
+    static int getMenuInput();
+    static int getInsertType();
+    static int getDeleteIndex();
+};
+
+#endif // UI_H
+
+// GraphicEditor.h 
+#ifndef GRAPHICEDITOR_H
+#define GRAPHICEDITOR_H
+
+#include "Shape.h"
+#include <vector>
+
+class GraphicEditor {
+private:
+    std::vector<Shape*> v;
+
+public:
+    GraphicEditor();
+    ~GraphicEditor();
+    void insertShape(Shape* shape);  // ������ �κ�
+    void deleteShape(int index);
+    void showAllShapes() const;
+};
+
+#endif // GRAPHICEDITOR_H
+
+
+<Shape.h>
+#ifndef SHAPE_H
+#define SHAPE_H
+
+class Shape {
+public:
+    virtual void draw() const = 0;
+    virtual ~Shape() {}
+};
+
+#endif // SHAPE_H
+
+
+
+
