@@ -184,7 +184,7 @@ private:
 public:
     GraphicEditor();
     ~GraphicEditor();
-    void insertShape(Shape* shape);  // ������ �κ�
+    void insertShape(Shape* shape);  
     void deleteShape(int index);
     void showAllShapes() const;
 };
