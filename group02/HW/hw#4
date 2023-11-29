@@ -1,5 +1,4 @@
-
-//CoffeeMachine.cpp
+<CoffeeMachine.cpp>
 #include "CoffeeMachine.h"
 #include <iostream>
 using namespace std;
@@ -59,9 +58,7 @@ using namespace std;
             }
         }
     }
-//CoffeeMachine.h
-
-
+<CoffeeMachine.h>
 #pragma once
 #include <iostream>
 #include "Material.h"
@@ -136,8 +133,7 @@ void Material::NormalCoffee(){
         cout << " ";
     }
 
-//Material.h
-
+<Material.h>
 #pragma once
 #include <iostream>
 using namespace std;
