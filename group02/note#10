@@ -1,0 +1,211 @@
+# 객체지향 정리노트 14주차
+
+<질문>
+
+텍스트 파일과 바이너리 파일의 차이점이 정확이 뭔지?
+
+텍스트 파일과 바이너리 파일은 데이터를 저장하고 전송하는 데 사용되는 두 가지 주요 유형의 파일입니다. 이들 간의 주요 차이점은 데이터의 표현과 처리 방법에 있습니다.
+
+1. **데이터 표현:**
+    - **텍스트 파일:** 텍스트 파일은 ASCII 또는 유니코드와 같은 문자 인코딩을 사용하여 텍스트 데이터를 저장합니다. 이는 사람이 읽을 수 있는 문자로 이루어져 있습니다. 텍스트 파일은 주로 텍스트 편집기에서 열어서 읽고 수정할 수 있습니다.
+    - **바이너리 파일:** 바이너리 파일은 텍스트 파일과 달리 텍스트 이외의 모든 종류의 데이터를 이진 형식으로 저장합니다. 이미지, 오디오, 비디오, 실행 파일 등 모든 종류의 데이터를 포함할 수 있습니다.
+2. **데이터 처리:**
+    - **텍스트 파일:** 텍스트 파일은 줄 바꿈 문자, 공백 등과 같은 문자 기반의 제어 문자를 사용하여 구조화되어 있습니다. 이로 인해 텍스트 파일은 텍스트 편집 도구 및 텍스트 처리 도구에서 쉽게 다룰 수 있습니다.
+    - **바이너리 파일:** 바이너리 파일은 특정한 데이터 구조에 맞추어 이진 형식으로 저장되어 있습니다. 텍스트 파일처럼 간단한 편집기로는 처리하기 어려우며, 주로 해당 데이터를 생성하고 처리하는 프로그램에 의해 사용됩니다.
+3. **가독성:**
+    - **텍스트 파일:** 사람이 읽고 이해하기 쉽습니다. 텍스트 파일은 텍스트 편집기 등 간단한 도구로 열어서 내용을 확인할 수 있습니다.
+    - **바이너리 파일:** 이진 형식으로 데이터가 저장되어 있어서 직접 읽기는 어려우며, 특별한 프로그램이나 도구를 사용해야 합니다.
+4. **크기:**
+    - **텍스트 파일:** 일반적으로 텍스트 파일은 비교적 작은 크기를 가집니다. 문자 인코딩에 따라 다르지만, 일반적으로 텍스트 데이터는 바이너리 데이터에 비해 크기가 작습니다.
+    - **바이너리 파일:** 이진 형식으로 데이터를 저장하기 때문에 텍스트 데이터에 비해 더 큰 파일 크기를 가질 수 있습니다.
+
+따라서 데이터가 텍스트로 이루어져 있고 사람이 읽을 수 있는 형태라면 텍스트 파일을 사용하고, 그렇지 않은 경우에는 바이너리 파일을 사용하는 것이 일반적입니다.
+
+<정리>
+
+텍스트 파일과 바이너리 파일의 차이점
+
+바이너리 파일이란? 문자로 표현되지 않는 바이너리 데이터가 기록된 파일→ 이미지, 오디오, 그래픽, 컴파일된 코드는 문자로 표현되지 않음 → 바이트를 문자로 해석 
+
+>> 연산자 istream의 get, read() 함수 
+
+>> 연산자 ostream의 put, write() 함수
+
+c++에서 파일입출력을 위한 표준 파일 입출력 라이브러리
+
+<< 와 >> 를 이용하여 간단히 텍스트 파일을 읽고 쓰는 방법
+
+파일 모드
+
+텍스트 I/O 모드로 파일을 읽고 쓰는 방법
+
+바이너리 I/O 모드로 파일을 읽고 쓰는 방법
+
+텍스트 I/O 모드로와바이너리I/O 모드의 차이점
+
+<실습1>
+
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+int main() {
+char name[10], dept[20];
+int sid;
+cout << "이름 >>";
+cin >> name;
+cout << "학번>>";
+cin >> sid;
+cout << "학과>>";
+cin >> dept;
+ofstream fout("c:\\temp\\student.txt");
+if (!fout) {
+cout << "c:\\temp\\student.txt 파일을 열 수 없다 ";
+return 0;
+}
+fout << name << endl;
+fout << sid << endl;
+fout << dept << endl;
+fout.close();
+}
+
+<실습2>
+
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+int main() {
+const char* file = "c:\\windows\\system.ini";
+ifstream fin(file);
+if (!fin) {
+cout << file << " 열기 오류" << endl;
+return 0;
+}
+int count = 0;
+int c;
+while ((c = fin.get()) != EOF) { // EOF를 만날 때까지 문자 읽기
+cout << (char)c;
+count++;
+}
+cout << "읽은 바이트 수는 " << count << endl;
+fin.close();
+}
+
+<실습3>
+
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+int main() {
+
+const char* firstFile = "c:\\temp\\student.txt";
+const char* secondFile = "c:\\windows\\system.ini";
+fstream fout(firstFile, ios::out | ios::app); // 쓰기 모드로 파일 열기
+if (!fout) { // 열기 실패 검사
+cout << firstFile << " 열기 오류";
+return 0;
+}
+fstream fin(secondFile, ios::in); // 읽기 모드로 파일 열기
+if (!fin) { // 열기 실패 검사
+cout << secondFile << " 열기 오류";
+return 0;
+}
+int c;
+while ((c = fin.get()) != EOF) { // 파일 끝까지 문자 읽기
+fout.put(c); // 읽은 문자 기록
+}
+fin.close(); // 입력 파일 닫기
+fout.close(); // 출력 파일 닫기
+}
+
+<실습4>
+
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+int main() {
+
+ifstream fin("c:\\windows\\system.ini");
+if (!fin) {
+cout << "c:\\windows\\system.ini 열기 실패" << endl;
+return 0;
+}
+char buf[81];
+while (fin.getline(buf, 81)) {
+cout << buf << endl;
+}
+fin.close();
+}
+
+<실습5>
+
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+int main() {
+const char* srcFile = "c:\\temp\\jeju.jpg";//Temp에 튤립이 없어 아무사진으로 대체
+const char* destFile = "c:\\temp\\copyjeju.jpg";
+ifstream fsrc(srcFile, ios::in | ios::binary);
+if (!fsrc) {
+cout << srcFile << "열기 오류" << endl;
+return 0;
+}
+ofstream fdest(destFile, ios::out | ios::binary);
+if (!fdest) {
+cout << destFile << "열기 오류" << endl;
+return 0;
+}
+char buf[1024];
+while (!fsrc.eof()) {
+fsrc.read(buf,1024);
+int n = fsrc.gcount();
+fdest.write(buf, n);
+}
+cout << srcFile << "을" << destFile << "로 복사완료" << endl;
+
+fsrc.close();
+fdest.close();
+}
+
+---
+
+---
+
+---
+
+<실습6> → 예외
+
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+int main() {
+
+int n, sum, average;
+while (true) {
+cout << "합을 입력하세요>>";
+cin >> sum;
+cout << "인원수를 입력하세요>>";
+cin >> n;
+
+try {
+if (n <= 0) {
+throw n;
+}
+else
+average = sum / n;
+}
+catch (int x) {
+cout << "예외 발생!!" << x << "으로 나눌수없음" << endl;
+average = 0;
+cout << endl;
+continue;
+}
+
+cout << "평균 = " << average << endl;
+}
+}
